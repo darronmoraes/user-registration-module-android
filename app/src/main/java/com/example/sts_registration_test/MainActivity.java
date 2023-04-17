@@ -9,6 +9,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,13 +58,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
 
-                if (response.body() != null) {
-                    if (response.isSuccessful()) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
                         Toast.makeText(MainActivity.this, "user registered " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
-                        tvShowServerMessage.setText(response.body().getMessage());
-                    } else {
-                        Toast.makeText(MainActivity.this, "request failed", Toast.LENGTH_SHORT).show();
+                        tvShowServerMessage.setText(response.body().getToken());
                     }
+                } else {
+                    // shows toast if user already registered
+                    String errorMessage = "";
+                    try {
+                        if (response.errorBody() != null) {
+                            JSONObject error = new JSONObject(response.errorBody().string());
+                            errorMessage = error.getString("message");
+                        }
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(MainActivity.this, "request failed: " + errorMessage, Toast.LENGTH_SHORT).show();
                 }
             }
 
