@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -17,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextEmail, editTextPassword;
     Button buttonRegister;
 
+    TextView tvShowServerMessage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonRegister = findViewById(R.id.buttonRegister);
+
+        tvShowServerMessage = findViewById(R.id.tvShowMessage);
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,10 +53,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
 
-                if (response.isSuccessful()) {
-                    Toast.makeText(MainActivity.this, "user registered", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "request failed", Toast.LENGTH_SHORT).show();
+                if (response.body() != null) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(MainActivity.this, "user registered " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
+                        tvShowServerMessage.setText(response.body().getMessage());
+                    } else {
+                        Toast.makeText(MainActivity.this, "request failed", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
