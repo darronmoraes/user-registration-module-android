@@ -2,6 +2,7 @@ package com.example.sts_registration_test;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         tvShowServerMessage = findViewById(R.id.tvShowMessage);
 
+        
+
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,8 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if (response.body() != null) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(MainActivity.this, "user registered " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "user registered " + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         tvShowServerMessage.setText(response.body().getMessage());
+                        Intent i = new Intent(getApplicationContext(), OtpSend.class);
+                        startActivity(i);
                     } else {
                         Toast.makeText(MainActivity.this, "request failed", Toast.LENGTH_SHORT).show();
                     }
