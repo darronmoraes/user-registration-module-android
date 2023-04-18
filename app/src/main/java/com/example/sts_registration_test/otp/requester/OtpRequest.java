@@ -1,4 +1,4 @@
-package com.example.sts_registration_test.otp;
+package com.example.sts_registration_test.otp.requester;
 
 public class OtpRequest {
     private String email;

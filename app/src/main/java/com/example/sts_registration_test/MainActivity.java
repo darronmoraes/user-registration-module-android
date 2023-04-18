@@ -2,6 +2,7 @@ package com.example.sts_registration_test;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,8 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sts_registration_test.otp.OtpRequest;
-import com.example.sts_registration_test.otp.OtpResponse;
+import com.example.sts_registration_test.otp.requester.OtpRequest;
+import com.example.sts_registration_test.otp.requester.OtpResponse;
 import com.example.sts_registration_test.user.UserRequest;
 import com.example.sts_registration_test.user.UserResponse;
 
@@ -65,9 +66,15 @@ public class MainActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        Toast.makeText(MainActivity.this, "user registered " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
-                        tvShowServerMessage.setText(response.body().getToken());
+                        Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        // send otp if user is not registered with the email already
                         sendOtp(createOtp(response.body().getEmail()));
+                        // redirect to verification of otp
+                        Intent verifyOtpIntent = new Intent(MainActivity.this, OtpVerificationActivity.class);
+                        // pass email to fragment for verification request
+                        verifyOtpIntent.putExtra("email", response.body().getEmail());
+                        startActivity(verifyOtpIntent);
+                        finish();
                     }
                 } else {
                     // shows toast if user already registered

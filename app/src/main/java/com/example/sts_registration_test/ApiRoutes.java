@@ -1,7 +1,9 @@
 package com.example.sts_registration_test;
 
-import com.example.sts_registration_test.otp.OtpRequest;
-import com.example.sts_registration_test.otp.OtpResponse;
+import com.example.sts_registration_test.otp.requester.OtpRequest;
+import com.example.sts_registration_test.otp.requester.OtpResponse;
+import com.example.sts_registration_test.otp.verify.OtpVerifyRequest;
+import com.example.sts_registration_test.otp.verify.OtpVerifyResponse;
 import com.example.sts_registration_test.user.UserRequest;
 import com.example.sts_registration_test.user.UserResponse;
 
@@ -16,5 +18,8 @@ public interface ApiRoutes {
 
     @POST("send_otp")
     Call<OtpResponse> sendRegistrationOtp(@Body OtpRequest otpRequest);
+
+    @POST("verify_otp")
+    Call<OtpVerifyResponse> verifyRegistrationOtp(@Body OtpVerifyRequest otpVerifyRequest);
 
 }

@@ -1,8 +1,9 @@
-package com.example.sts_registration_test.otp;
+package com.example.sts_registration_test.otp.verify;
 
-public class OtpResponse {
+public class OtpVerifyResponse {
     private String message;
     private int status;
+    private boolean success;
 
     public String getMessage() {
         return message;
@@ -18,5 +19,13 @@ public class OtpResponse {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }
