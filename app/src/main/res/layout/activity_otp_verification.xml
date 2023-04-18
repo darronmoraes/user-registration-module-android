@@ -42,15 +42,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_via_email" />
 
+    <TextView
+        android:id="@+id/tv_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:textColor="#A3A3A3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_verify"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="200dp"
         android:background="#FF5722"
         android:text="verify"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
