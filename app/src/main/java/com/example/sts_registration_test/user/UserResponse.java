@@ -1,4 +1,4 @@
-package com.example.sts_registration_test;
+package com.example.sts_registration_test.user;
 
 public class UserResponse {
 

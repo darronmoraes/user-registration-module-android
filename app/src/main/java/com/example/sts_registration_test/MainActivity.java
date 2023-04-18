@@ -9,6 +9,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sts_registration_test.otp.OtpRequest;
+import com.example.sts_registration_test.otp.OtpResponse;
+import com.example.sts_registration_test.user.UserRequest;
+import com.example.sts_registration_test.user.UserResponse;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void register(UserRequest userRequest) {
-        Call<UserResponse> userResponseCall = ApiClient.getUserService().saveUser(userRequest);
+        Call<UserResponse> userResponseCall = ApiClient.getRegisterUserRoute().registerUser(userRequest);
         userResponseCall.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     if (response.body() != null) {
                         Toast.makeText(MainActivity.this, "user registered " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
                         tvShowServerMessage.setText(response.body().getToken());
+                        sendOtp(createOtp(response.body().getEmail()));
                     }
                 } else {
                     // shows toast if user already registered
@@ -81,6 +87,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "failed " +t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public OtpRequest createOtp(String email) {
+        OtpRequest otpRequest = new OtpRequest();
+        otpRequest.setEmail(email);
+        return otpRequest;
+    }
+
+    public void sendOtp(OtpRequest otpRequest) {
+        Call<OtpResponse> otpResponseCall = ApiClient.getSendOtpRoute().sendRegistrationOtp(otpRequest);
+        otpResponseCall.enqueue(new Callback<OtpResponse>() {
+            @Override
+            public void onResponse(Call<OtpResponse> call, Response<OtpResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        Toast.makeText(MainActivity.this, "otp sent", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OtpResponse> call, Throwable t) {
+
             }
         });
     }
