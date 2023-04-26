@@ -9,7 +9,6 @@ public class User {
         this.userId = userId;
         this.email = email;
         this.token = token;
-
     }
 
     public String getEmail() {

@@ -5,9 +5,13 @@ import com.example.sts_registration_test.model.User;
 public class LoginResponse {
     private String message;
     private int status;
-    private String token;
-
     private  User user;
+
+    public LoginResponse(String message, int status, User user) {
+        this.message = message;
+        this.status = status;
+        this.user = user;
+    }
 
     public User getUser() {
         return user;
@@ -31,13 +35,5 @@ public class LoginResponse {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 }
