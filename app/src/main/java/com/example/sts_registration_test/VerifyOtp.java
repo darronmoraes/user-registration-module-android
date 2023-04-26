@@ -143,7 +143,7 @@ public class VerifyOtp extends AppCompatActivity {
                     if (userResponse.getStatus() == 200) {
                         sharedPrefManager.saveUser(userResponse.getUser());
                         Toast.makeText(VerifyOtp.this, "user registered " + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(getApplicationContext(), PassengerHomePage.class);
+                        Intent i = new Intent(getApplicationContext(), User_register_details.class);
                         startActivity(i);
                     }
                 }else {

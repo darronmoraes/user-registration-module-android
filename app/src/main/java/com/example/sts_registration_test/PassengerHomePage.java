@@ -33,8 +33,6 @@ public class PassengerHomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 logout(logoutRequest());
-//                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-//                startActivity(i);
             }
         });
 
@@ -67,7 +65,6 @@ public class PassengerHomePage extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
-
                 } else {
                     Toast.makeText(PassengerHomePage.this, "onResponse: " + response.errorBody(), Toast.LENGTH_SHORT).show();
                 }
@@ -80,18 +77,12 @@ public class PassengerHomePage extends AppCompatActivity {
         });
     }
 
-    public void getLoggedInUserDetails() {
-        sharedPrefManager = new SharedPrefManager(getApplicationContext());
 
-        String username = "Welcome back! "
-                + sharedPrefManager.getUser().getUserId()
-                + " "
-                + sharedPrefManager.getUser().getEmail();
+    /*
+    * Custom functions required for this activity
+    * */
 
-//        tvUsername.setText(username);
-//        tvEmail.setText(sharedPrefManager.getUser().getEmail());
-    }
-
+    // get current user token from shared pref manager
     public String getSessionToken() {
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         return sharedPrefManager.getUser().getToken();

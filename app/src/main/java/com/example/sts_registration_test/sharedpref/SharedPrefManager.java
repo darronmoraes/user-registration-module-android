@@ -28,6 +28,19 @@ public class SharedPrefManager {
         editor.apply();
     }
 
+    public void addUserDetails(User user){
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.putString("firstname",user.getFirstname());
+        editor.putString("lastname",user.getLastname());
+        editor.putString("contact",user.getContact());
+        editor.putString("address",user.getAddress());
+        editor.putString("gender",user.getGender());
+        editor.putString("category",user.getCategory());
+        editor.putString("dob",user.getDob());
+        editor.apply();
+    }
+
     public boolean isLogged() {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean("logged", false);

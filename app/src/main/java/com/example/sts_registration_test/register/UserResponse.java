@@ -38,4 +38,32 @@ public class UserResponse {
     public void setUser(User user) {
         this.user = user;
     }
+
+
+
+    /*
+    * {
+    "message": "passenger details registered successfully",
+    "status": 200,
+    "success": true,
+    "user": {
+        "address": "Hno 41, quepem",
+        "category": "student",
+        "contact": "8805859397",
+        "dob": "Mon, 16 Dec 1996 00:00:00 GMT",
+        "firstname": "allister",
+        "gender": "male",
+        "lastname": "lopes"
+    }
+}
+    * */
+    private boolean success;
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 }

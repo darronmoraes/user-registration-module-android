@@ -15,6 +15,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.HTTP;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface UserService {
@@ -33,5 +34,8 @@ public interface UserService {
 
     @HTTP(method = "DELETE", path = "logout", hasBody = true)
     Call<LogoutResponse> logout(@Body LogoutRequest logoutRequest);
+
+    @POST("add-passenger-details")  
+    Call<UserResponse> addDetails(@Header ("Authorization") String token, @Body UserRequest userRequest);
 
 }
