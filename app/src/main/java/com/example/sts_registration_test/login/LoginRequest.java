@@ -1,12 +1,6 @@
-package com.example.sts_registration_test;
+package com.example.sts_registration_test.login;
 
-public class UserRequest {
-
-    /*
-    * "email":"",
-    * "password":""
-    * */
-
+public class LoginRequest {
     private String email;
     private String password;
 
