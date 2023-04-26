@@ -1,4 +1,6 @@
-package com.example.sts_registration_test;
+package com.example.sts_registration_test.register;
+
+import com.example.sts_registration_test.model.User;
 
 public class UserResponse {
 
@@ -8,7 +10,10 @@ public class UserResponse {
     * */
 
     private String message;
-    private String status;
+    private int status;
+
+    private User user;
+
 
     public String getMessage() {
         return message;
@@ -18,11 +23,19 @@ public class UserResponse {
         this.message = message;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
