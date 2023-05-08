@@ -1,40 +1,35 @@
 package com.example.sts_registration_test;
 
+import com.example.sts_registration_test.Api;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiClient {
+public class Client {
+    private final Retrofit retrofit;
 
-    private static final String BASE_URL = "http://192.168.226.107:5000/user/";
-
-
-
-    private static Retrofit getRetrofit() {
-
+    // Private constructor to prevent creation of additional instances
+    private Client(String baseUrl) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor).build();
 
-
-
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+        retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
-
-        return retrofit;
     }
 
+    public static synchronized Client getInstance(String baseUrl) {
+        return new Client(baseUrl);
+    }
 
-
-    public static Api getUserService() {
-        Api userService = getRetrofit().create(Api.class);
-        return userService;
+    public Api getRoute() {
+        return retrofit.create(Api.class);
     }
 }

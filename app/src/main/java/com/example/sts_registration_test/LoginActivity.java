@@ -39,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        // ----------------- do the changes
         text = findViewById(R.id.adminText);
         email = findViewById(R.id.adminUsername);
         password = findViewById(R.id.adminPassword);
@@ -88,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(LoginRequest loginRequest) {
-        Call<LoginResponse> loginResponseCall = ApiClient.getUserService().login(loginRequest);
+        Call<LoginResponse> loginResponseCall = Client.getInstance(Consts.ENDPOINT_LOGIN).getRoute().login(loginRequest);
         loginResponseCall.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {

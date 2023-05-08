@@ -1,100 +1,80 @@
 package com.example.sts_registration_test;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.view.MenuItem;
 
-import com.example.sts_registration_test.logout.LogoutRequest;
-import com.example.sts_registration_test.logout.LogoutResponse;
-import com.example.sts_registration_test.sharedpref.SharedPrefManager;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class PassengerHomePage extends AppCompatActivity {
 
-
-    Button logoutBtn;
-    SharedPrefManager sharedPrefManager;
+    BottomNavigationView bnView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passenger_home_page);
 
-        logoutBtn = findViewById(R.id.logout);
+        bnView = findViewById(R.id.bnView);
 
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
+        bnView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                logout(logoutRequest());
-//                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-//                startActivity(i);
-            }
-        });
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id =  item.getItemId();
 
-
-    }
-
-    // ------------------------- Logout --------------------------------------//
-
-    public LogoutRequest logoutRequest(){
-        LogoutRequest logoutRequest=new LogoutRequest();
-        logoutRequest.setToken(getSessionToken());
-        return logoutRequest;
-    }
-
-
-
-    public void logout(LogoutRequest logoutRequest){
-        Call<LogoutResponse> logoutResponseCall= ApiClient.getUserService().logout(logoutRequest);
-        logoutResponseCall.enqueue(new Callback<LogoutResponse>() {
-            @Override
-            public void onResponse(Call<LogoutResponse> call, Response<LogoutResponse> response) {
-                LogoutResponse logoutResponse=response.body();
-                if (response.isSuccessful()){
-//                    Toast.makeText(AdminDashboard.this, "Logout successful", Toast.LENGTH_SHORT).show();
-                    if(logoutResponse != null && logoutResponse.getStatus() == 200){
-                        sharedPrefManager.logout();
-                        Toast.makeText(PassengerHomePage.this, "Logout successful", Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(PassengerHomePage.this,LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        finish();
-                    }
-
-                } else {
-                    Toast.makeText(PassengerHomePage.this, "onResponse: " + response.errorBody(), Toast.LENGTH_SHORT).show();
+                if (id == R.id.home){
+                    loadFrag(new HomeFragment(), false);
+                } else if (id == R.id.ticket) {
+                    loadFrag(new TicketFragment(),false);
+                } else if (id == R.id.schedule) {
+                    loadFrag(new ScheduleFragment(),false);
+                } else if (id == R.id.issues) {
+                    loadFrag(new IssueReportingFragment(),false);
+                }else {
+                    loadFrag(new ProfileFragment(),true);
                 }
-            }
 
-            @Override
-            public void onFailure(Call<LogoutResponse> call, Throwable t) {
-                Toast.makeText(PassengerHomePage.this, "onFailure: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
+
+        /*bnView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id =  item.getItemId();
+
+                if (id == R.id.home){
+                    loadFrag(new HomeFragment(), false);
+                } else if (id == R.id.ticket) {
+                    loadFrag(new TicketFragment(),false);
+                } else if (id == R.id.schedule) {
+                    loadFrag(new ScheduleFragment(),false);
+                } else if (id == R.id.issues) {
+                    loadFrag(new IssueReportingFragment(),false);
+                }else {
+                    loadFrag(new ProfileFragment(),true);
+                }
+
+                return true;
+            }
+        });*/
+
+        bnView.setSelectedItemId(R.id.profile);
     }
 
-    public void getLoggedInUserDetails() {
-        sharedPrefManager = new SharedPrefManager(getApplicationContext());
-
-        String username = "Welcome back! "
-                + sharedPrefManager.getUser().getUserId()
-                + " "
-                + sharedPrefManager.getUser().getEmail();
-
-//        tvUsername.setText(username);
-//        tvEmail.setText(sharedPrefManager.getUser().getEmail());
+    public  void loadFrag(Fragment fragment, Boolean flag){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        if (flag)
+            ft.add(R.id.container, fragment);
+        else
+            ft.replace(R.id.container, fragment);
+        ft.commit();
     }
-
-    public String getSessionToken() {
-        sharedPrefManager = new SharedPrefManager(getApplicationContext());
-        return sharedPrefManager.getUser().getToken();
-    }
-
 }
