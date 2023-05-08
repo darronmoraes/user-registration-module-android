@@ -11,18 +11,6 @@ import android.view.ViewGroup;
 public class IssueReportingFragment extends Fragment {
 
 
-    public IssueReportingFragment() {
-        // Required empty public constructor
-    }
-
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

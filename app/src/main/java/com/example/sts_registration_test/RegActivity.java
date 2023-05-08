@@ -62,7 +62,7 @@ public class RegActivity extends AppCompatActivity {
     }
 
     public void sendOtp(RequestOtp requestOtp) {
-        Call<ResponseOtp> responseOtpCall = ApiClient.getUserService().sendOtp(requestOtp);
+        Call<ResponseOtp> responseOtpCall = Client.getInstance(Consts.ENDPOINT_REQUEST_OTP).getRoute().sendOtp(requestOtp);
         responseOtpCall.enqueue(new Callback<ResponseOtp>() {
             @Override
             public void onResponse(Call<ResponseOtp> call, Response<ResponseOtp> response) {

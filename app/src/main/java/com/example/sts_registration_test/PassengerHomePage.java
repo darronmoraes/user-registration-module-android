@@ -23,8 +23,7 @@ public class PassengerHomePage extends AppCompatActivity {
 
         bnView = findViewById(R.id.bnView);
 
-
-        bnView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bnView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id =  item.getItemId();
@@ -44,6 +43,27 @@ public class PassengerHomePage extends AppCompatActivity {
                 return true;
             }
         });
+
+        /*bnView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id =  item.getItemId();
+
+                if (id == R.id.home){
+                    loadFrag(new HomeFragment(), false);
+                } else if (id == R.id.ticket) {
+                    loadFrag(new TicketFragment(),false);
+                } else if (id == R.id.schedule) {
+                    loadFrag(new ScheduleFragment(),false);
+                } else if (id == R.id.issues) {
+                    loadFrag(new IssueReportingFragment(),false);
+                }else {
+                    loadFrag(new ProfileFragment(),true);
+                }
+
+                return true;
+            }
+        });*/
 
         bnView.setSelectedItemId(R.id.profile);
     }

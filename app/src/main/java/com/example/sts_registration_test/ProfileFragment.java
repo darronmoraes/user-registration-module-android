@@ -21,19 +21,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
-
     Button logout;
-
     Context context;
-
     SharedPrefManager sharedPrefManager;
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,21 +35,14 @@ public class ProfileFragment extends Fragment {
 
 
         logout = rootView.findViewById(R.id.logout);
-
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 logout(logoutRequest());
             }
         });
-
-
-
         return rootView;
     }
-
-
-
 
 
     public LogoutRequest logoutRequest(){
@@ -67,19 +51,15 @@ public class ProfileFragment extends Fragment {
         return logoutRequest;
     }
 
-
-
     public void logout(LogoutRequest logoutRequest){
-        Call<LogoutResponse> logoutResponseCall= ApiClient.getUserService().logout(logoutRequest);
+        Call<LogoutResponse> logoutResponseCall= Client.getInstance(Consts.ENDPOINT_LOGOUT).getRoute().logout(logoutRequest);
         logoutResponseCall.enqueue(new Callback<LogoutResponse>() {
             @Override
             public void onResponse(Call<LogoutResponse> call, Response<LogoutResponse> response) {
                 LogoutResponse logoutResponse=response.body();
                 if (response.isSuccessful()){
-//                    Toast.makeText(AdminDashboard.this, "Logout successful", Toast.LENGTH_SHORT).show();
                     if(logoutResponse != null && logoutResponse.getStatus() == 200){
                         sharedPrefManager.logout();
-//                        Toast.makeText(context, "logout successful", Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(requireContext(),LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);

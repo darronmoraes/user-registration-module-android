@@ -93,7 +93,7 @@ public class VerifyOtp extends AppCompatActivity {
     }
 
     public void verifyOtp(RequestVerifyOtp requestVerifyOtp) {
-        Call<ResponseVerifyOtp> responseVerifyOtpCall = ApiClient.getUserService().verifyOtp(requestVerifyOtp);
+        Call<ResponseVerifyOtp> responseVerifyOtpCall = Client.getInstance(Consts.ENDPOINT_VERIFY_OTP).getRoute().verifyOtp(requestVerifyOtp);
         responseVerifyOtpCall.enqueue(new Callback<ResponseVerifyOtp>() {
             @Override
             public void onResponse(Call<ResponseVerifyOtp> call, Response<ResponseVerifyOtp> response) {
@@ -134,7 +134,7 @@ public class VerifyOtp extends AppCompatActivity {
     }
 
     public void register(UserRequest userRequest) {
-        Call<UserResponse> userResponseCall = ApiClient.getUserService().saveUser(userRequest);
+        Call<UserResponse> userResponseCall = Client.getInstance(Consts.BASE_URL_PASSENGER_AUTH).getRoute().saveUser(userRequest);
         userResponseCall.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
